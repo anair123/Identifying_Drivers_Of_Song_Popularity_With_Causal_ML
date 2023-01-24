@@ -64,14 +64,10 @@ def main():
 
     st.write(f'For a description of the audio features, visit the Spotify API documentation: https://developer.spotify.com/documentation/web-api/reference/#/operations/get-audio-features')
 
+    # create button that generates prediction
     if st.button('Predict'):
-
         input_features_processed = preprocessing.transform(input_features)
-
-
         prediction = rf_model.predict(input_features_processed)[0]
-
-
         st.success(f'Popularity Score: {np.round(prediction, 2)}')
 
 if __name__ == '__main__':
