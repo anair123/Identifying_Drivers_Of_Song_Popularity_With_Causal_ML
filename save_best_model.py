@@ -9,41 +9,52 @@ import warnings
 from sklearn.preprocessing import OneHotEncoder
 import matplotlib.pyplot as plt 
 import joblib
+import os
 
 warnings.filterwarnings(action='ignore')
 
 
+def main():
 # load data
 
-df = pd.read_excel('Data/Processed Data/model_data.xlsx')
+    df = pd.read_excel('Data/Processed Data/model_data.xlsx')
 
-predictors = ['danceability', 'energy', 'key', 'loudness', 'mode', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'time_signature', 'followers', 'is_pop_or_rap', 'months_since_release', 'duration_s']
-target = 'popularity'
+    predictors = ['danceability', 'energy', 'key', 'loudness', 'mode', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'time_signature', 'followers', 'is_pop_or_rap', 'months_since_release', 'duration_s']
+    target = 'popularity'
 
-# create input and output data
-X = df[predictors]
-y = df[target]
+    # create input and output data
+    X = df[predictors]
+    y = df[target]
 
-# create training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42)
-
-
-
-# transform training and testing data
-ct_ohe = ColumnTransformer(transformers=[('one hot encode', OneHotEncoder(handle_unknown='ignore'), ['key'])], remainder='passthrough')
-transform = Pipeline(steps=[('one hot encode', ct_ohe),
-                        ('scaler', StandardScaler())])
-
-X_train_shap = transform.fit_transform(X_train)
-X_test_shap = transform.transform(X_test)
+    # create training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42)
 
 
-# fit random forest regressor
-model = RandomForestRegressor(max_depth=30, min_samples_leaf=3, min_samples_split=5, n_estimators=700, n_jobs=1, random_state=42)
-model.fit(X_train_shap, y_train)
 
-# save model and pipeline object for future use 
-joblib.dump(model, 'Models/random_forest_regressor.pkl', compress=9)
-joblib.dump(transform, 'Models/preprocessing.pkl')
+    # transform training and testing data
+    ct_ohe = ColumnTransformer(transformers=[('one hot encode', OneHotEncoder(handle_unknown='ignore'), ['key'])], remainder='passthrough')
+    transform = Pipeline(steps=[('one hot encode', ct_ohe),
+                            ('scaler', StandardScaler())])
 
-print('Done')
+    X_train_shap = transform.fit_transform(X_train)
+    X_test_shap = transform.transform(X_test)
+
+
+    # fit random forest regressor
+    model = RandomForestRegressor(max_depth=30, min_samples_leaf=3, min_samples_split=5, n_estimators=700, n_jobs=1, random_state=42)
+    model.fit(X_train_shap, y_train)
+
+
+    # create directory
+    try:
+        os.mkdir('Streamlit_objects')
+    except:
+        print('stremlit_objects folder already exists.')
+    # save model and pipeline object for future use 
+    joblib.dump(model, 'Streamlit_objects/random_forest_regressor.pkl', compress=9)
+    joblib.dump(transform, 'Streamlit_objects/preprocessing.pkl')
+
+    print('Done')
+
+if __name__ == '__main__':
+    main()
