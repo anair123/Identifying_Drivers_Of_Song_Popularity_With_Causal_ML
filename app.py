@@ -14,8 +14,8 @@ from PIL import Image
 def load_pipeline_and_model():
     """load the pipeline object for preprocessing and the ml model"""
 
-    preprocessing = joblib.load('Models/preprocessing.pkl')
-    rf_model = joblib.load('Models/random_forest_regressor.pkl')
+    preprocessing = joblib.load('Streamlit_objects/preprocessing.pkl')
+    rf_model = joblib.load('Streamlit_objects/random_forest_regressor.pkl')
     return preprocessing, rf_model
 
 
