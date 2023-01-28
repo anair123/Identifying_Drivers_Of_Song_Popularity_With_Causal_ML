@@ -3,11 +3,10 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn.compose import ColumnTransformer
 import warnings
 from sklearn.preprocessing import OneHotEncoder
-import matplotlib.pyplot as plt 
 import joblib
 import os
 
@@ -49,7 +48,7 @@ def main():
     try:
         os.mkdir('Streamlit_objects')
     except:
-        print('stremlit_objects folder already exists.')
+        print('Streamlit_objects folder already exists.')
     # save model and pipeline object for future use 
     joblib.dump(model, 'Streamlit_objects/random_forest_regressor.pkl', compress=9)
     joblib.dump(transform, 'Streamlit_objects/preprocessing.pkl')
