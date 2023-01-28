@@ -21,12 +21,14 @@ def load_pipeline_and_model():
 
 
 def main():
+    # load pipeline object and model
     preprocessing, rf_model = load_pipeline_and_model()
 
     # side bar and title
     st.sidebar.header('Track Features')
     st.header('Spotify Track Popularity Prediction App')
 
+    # load image
     image = Image.open('Spotify.jpg')
     st.image('Spotify.jpg')
 
@@ -47,6 +49,7 @@ def main():
     valence = st.sidebar.slider('Valence', 0.0, 1.0, 0.01)
     time_signature = st.sidebar.slider('Time Signature', 0.0, 1.0, 0.01)
 
+    # assign value to is_pop_or_rap feature
     if genre in ['Pop', 'Rap']:
         is_pop_or_rap = 1
     else:
@@ -62,6 +65,7 @@ def main():
         time_signature, followers, is_pop_or_rap, months_since_release,
         duration_s]
 
+    # spotify documentation
     st.write(f'For a description of the audio features, visit the Spotify API documentation: https://developer.spotify.com/documentation/web-api/reference/#/operations/get-audio-features')
 
     # create button that generates prediction
