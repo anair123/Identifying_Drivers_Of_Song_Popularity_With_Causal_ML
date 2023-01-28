@@ -15,15 +15,31 @@ Aashish Nair
 LinkedIn: www.linkedin.com/in/aashish-nair  
 Medium: https://medium.com/@aashishnair
 
-## Installation
-All Python packages needed to deploy the streamlit app can be installed with the following command:  
-  ```pip install requirements.txt```
+## Web App Deployment Instructions
+To run the streamlit app on your own device, do the following:
+1. Clone this repository into your directory
+```git clone https://github.com/anair123 Identifying_Drivers_Of_Song_Popularity_With_Causal_ML.git```  
 
+2. Install all of these packages (preferably in a virtual environment):   
+
+```
+pip install pandas
+pip install -U scikit-learn
+pip install openpyxl  
+pip install streamlit
+```  
+3. Load the machine learning model and preprocessing pipeline by running the "save_best_model.py" file. 
+```python save_best_model.py```   
+
+4. Run the streamlit app by running te following command.  
+```streamlit run app.py```
 
 ## Tech Stack
 Data collection: Requests  
 Data analysis: Pandas, Numpy, Matplotlib, Seaborn  
 Data modeling: Scikit Learn  
 Model deployment: Streamlit
+
+
 
 
