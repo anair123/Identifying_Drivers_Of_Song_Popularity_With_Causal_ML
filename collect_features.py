@@ -12,12 +12,15 @@ import time
 
 
 def spotipy_object(CLIENT_ID, CLIENT_SECRET):
+    """return the spotify object using the given client credentials"""
+
     client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
     return sp
 
 def get_audio_features(track_id):
+    """obtain audio feature data for the given track"""
     try: 
         audio = sp.audio_features(track_id)[0]
         return audio
@@ -25,6 +28,7 @@ def get_audio_features(track_id):
         return float('NaN')
 
 def get_artist_info(artist_id):
+    """obtain artist info for the given artist"""
     try:
         artist_info = sp.artist(artist_id)
         return artist_info

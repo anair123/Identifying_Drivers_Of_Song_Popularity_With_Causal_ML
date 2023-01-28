@@ -9,18 +9,26 @@ import time
 
 
 def spotipy_object(CLIENT_ID, CLIENT_SECRET):
+    """create spotify objects with the given client credentias"""
+
+    # create spotify object
     client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
     return sp
 
 def get_artists(sp, artist):
+    """collect tracks from the given artist"""
+    
+    # store query response
     track_results = sp.search(q=f'artist:{artist}', type='artist', limit=1)
 
     print(track_results)
 
-def get_tracks(sp, artist):
+def get_tracks(sp, artist) -> pd.DataFrame:
+    """returns a data frame containing all tracks released by the given artist"""
 
+    # create empty lists to store data
     offset = 0
     ls = []
     track_id = []
@@ -30,15 +38,15 @@ def get_tracks(sp, artist):
     explicit = []
     popularity = []
     release_date = []
-    followers = []
-    artist_genres = []
 
+    # keep executing api calls until the offset parameter reaches 1000
     while offset<1000:
         
+        # make an api call for track data
         track_results = sp.search(q=f'artist:{artist}', type='track', limit=50,offset=offset)
 
+        # store track data in the created lists
         for i, track in enumerate(track_results['tracks']['items']):
-
             try: 
                 if track['artists'][0]['name']==artist:
 
@@ -49,17 +57,13 @@ def get_tracks(sp, artist):
                     explicit.append(track['explicit'])
                     release_date.append(track['album']['release_date'])
                     popularity.append(track['popularity'])
-                    #followers.append(track['artists'][1]['followers']['total'])
-                    #artist_genres.append(track['artists'][2]['genres'])
-                  
                     ls.append(track['name'])
             except Exception as e:
                 print(e)
                 
-
         offset+=50
 
-    print(f'{artist}: {len(ls)}')
+    # store lists in a dataframe
     df = pd.DataFrame()
     df['track_id'] = track_id
     df['track_name'] = track_name 
@@ -69,6 +73,7 @@ def get_tracks(sp, artist):
     df['release_date'] = release_date
     df['popularity'] = popularity
 
+    # return data frame
     return df      
 
 def get_artist_genres(sp, artist_id):
@@ -95,6 +100,7 @@ if __name__=='__main__':
 
     sp = spotipy_object(CLIENT_ID=CLIENT_ID, CLIENT_SECRET=CLIENT_SECRET)
 
+    print(type(sp))
     artists = pd.read_excel('artists.xlsx')
     artists = list(artists['artist'])
 
@@ -107,24 +113,10 @@ if __name__=='__main__':
         else:
             df = pd.concat([df, df_artist])
         time.sleep(2)
-
-    '''
-    df_audio_features = pd.DataFrame()
-    df_audio_features['track_id'] = df['track_id']
-    df_audio_features['audio'] = df_audio_features['track_id'].apply(lambda x: get_audio_features(sp=sp, track_id=x))
-
-    split = pd.DataFrame(df_audio_features['audio'].to_list(), 
-    columns = ['danceability', 'energy', 'key', 'loudness', 'mode', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo', 'type', 'id', 'uri', 'track_href', 'analysis_url', 'dusration_ms', 'time_signature'])
-    print(split.head())
-    '''
         
     print('Phase 1 done!')
 
+    # export data
     df.to_excel('Data/tracks.xlsx', index=False)
     #df_audio_features.to_excel('Data/audio_data.xlsx', index=False)
     #time.sleep(30)
-
-
-    features = sp.audio_features('1bDbXMyjaUIooNwFE9wn0N')
-    print("features:", features[0].keys())
-    
