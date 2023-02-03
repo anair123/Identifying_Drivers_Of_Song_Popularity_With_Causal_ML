@@ -18,8 +18,6 @@ def load_pipeline_and_model():
     rf_model = joblib.load('Streamlit_objects/random_forest_regressor.pkl')
     return preprocessing, rf_model
 
-
-
 def main():
     # load pipeline object and model
     preprocessing, rf_model = load_pipeline_and_model()

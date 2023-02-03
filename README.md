@@ -10,15 +10,19 @@ These artists perform multiple tracks with the same voice, style, and genre. So,
 
 The goal of this project is to build a streamlit app that uses a machine learning model to predict how popular a Spotify song wil be based on certain features. 
 
+For a step-by-step breakdown on how the project was conducted, check out the following article: https://towardsdatascience.com/identifying-drivers-of-spotify-song-popularity-with-causal-ml-934e8347d2aa#b34e
+
 ## Author
 Aashish Nair  
 LinkedIn: www.linkedin.com/in/aashish-nair  
 Medium: https://medium.com/@aashishnair
 
 ## Web App Deployment Instructions
-To run the streamlit app on your own device, do the following:
-1. Clone this repository into your directory
-```git clone https://github.com/anair123 Identifying_Drivers_Of_Song_Popularity_With_Causal_ML.git```  
+To run the streamlit app on your own device, do the following:  
+1. Pull the files from this repository into your machine with this command. 
+```
+git clone https://github.com/anair123/Identifying_Drivers_Of_Song_Popularity_With_Causal_ML.git
+```
 
 2. Install all of these packages (preferably in a virtual environment):   
 

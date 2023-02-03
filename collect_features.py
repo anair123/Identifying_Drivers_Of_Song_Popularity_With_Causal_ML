@@ -21,6 +21,8 @@ def spotipy_object(CLIENT_ID, CLIENT_SECRET):
 
 def get_audio_features(track_id):
     """obtain audio feature data for the given track"""
+
+    # collect audio features if available
     try: 
         audio = sp.audio_features(track_id)[0]
         return audio
@@ -29,6 +31,8 @@ def get_audio_features(track_id):
 
 def get_artist_info(artist_id):
     """obtain artist info for the given artist"""
+
+    # return artist data if available
     try:
         artist_info = sp.artist(artist_id)
         return artist_info
