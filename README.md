@@ -10,6 +10,7 @@ These artists perform multiple tracks with the same voice, style, and genre. So,
 
 The goal of this project is to build a streamlit app that uses a machine learning model to predict how popular a Spotify song wil be based on certain features. 
 
+## Learn More About This Project On Medium
 For a step-by-step breakdown on how the project was conducted, check out the following article: https://towardsdatascience.com/identifying-drivers-of-spotify-song-popularity-with-causal-ml-934e8347d2aa#b34e
 
 ## Author
